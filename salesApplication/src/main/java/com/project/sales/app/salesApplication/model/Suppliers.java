@@ -6,6 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Esta clase representa un objeto que contiene información sobre la entidad de Proveedores.
+ *
+ * @version 1.0
+ * @since 2025-05-13
+ */
 @Entity
 @Table(name = "suppliers")
 public class Suppliers {
