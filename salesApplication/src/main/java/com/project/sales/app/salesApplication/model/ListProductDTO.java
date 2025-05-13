@@ -2,7 +2,12 @@ package com.project.sales.app.salesApplication.model;
 
 
 
-
+/**
+ * Esta clase representa el objeto para mostrar informacion de los Productos.
+ *
+ * @version 1.0
+ * @since 2025-05-13
+ */
 public class ListProductDTO {
 	  private String productName;
 	  private int quantityPerUnit;
