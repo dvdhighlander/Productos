@@ -10,6 +10,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Esta clase representa un objeto que contiene información sobre la entidad de Productos.
+ *
+ * @version 1.0
+ * @since 2025-05-13
+ */
 @Entity
 @Table(name = "products")
 public class Products {
