@@ -7,6 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Esta clase representa el objeto que contiene información sobre la Categorias.
+ *
+ * @version 1.0
+ * @since 2025-05-13
+ */
 @Entity
 @Table(name = "categories")
 public class Categories {
