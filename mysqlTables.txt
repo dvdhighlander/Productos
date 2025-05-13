@@ -1,0 +1,141 @@
+CREATE SCHEMA `productos` ;
+CREATE TABLE `productos`.`suppliers` (
+  `supplierID` INT NOT NULL,
+  `companyName` VARCHAR(100) NULL,
+  `contactName` VARCHAR(100) NULL,
+  `contactTitle` VARCHAR(100) NULL,
+  `address` VARCHAR(200) NULL,
+  `city` VARCHAR(100) NULL,
+  `region` VARCHAR(100) NULL,
+  `postalCode` INT NULL,
+  `country` VARCHAR(100) NULL,
+  `phone` DOUBLE NULL,
+  `fax` VARCHAR(45) NULL,
+  `homePage` VARCHAR(200) NULL,
+  PRIMARY KEY (`supplierID`),
+  INDEX `index1` (`companyName` ASC) INVISIBLE,
+  INDEX `index2` (`postalCode` ASC) INVISIBLE);
+CREATE TABLE `productos`.`categories` (
+  `categoryID` INT NOT NULL,
+  `categoryName` VARCHAR(100) NULL,
+  `description` VARCHAR(100) NULL,
+  `picture` VARCHAR(100) NULL,
+  PRIMARY KEY (`categoryID`),
+  UNIQUE INDEX `categoryName_UNIQUE` (`categoryName` ASC) VISIBLE);
+CREATE TABLE `productos`.`customers` (
+  `customerID` INT NOT NULL,
+  `companyName` VARCHAR(100) NULL,
+  `contactName` VARCHAR(200) NULL,
+  `contactTitle` VARCHAR(45) NULL,
+  `address` VARCHAR(200) NULL,
+  `city` VARCHAR(45) NULL,
+  `region` VARCHAR(45) NULL,
+  `postalCode` INT NULL,
+  `country` VARCHAR(45) NULL,
+  `phone` DOUBLE NULL,
+  `fax` VARCHAR(45) NULL,
+  PRIMARY KEY (`customerID`),
+  INDEX `Index1` (`city` ASC) VISIBLE,
+  INDEX `Index2` (`companyName` ASC) VISIBLE,
+  INDEX `Index3` (`postalCode` ASC) VISIBLE,
+  INDEX `Index4` (`region` ASC) VISIBLE);
+CREATE TABLE `productos`.`shippers` (
+  `shipperID` INT NOT NULL,
+  `companyName` VARCHAR(100) NULL,
+  `phone` DOUBLE NULL,
+  PRIMARY KEY (`shipperID`));
+CREATE TABLE `productos`.`employees` (
+  `employeeID` INT NOT NULL,
+  `lastName` VARCHAR(45) NULL,
+  `firstName` VARCHAR(45) NULL,
+  `title` VARCHAR(45) NULL,
+  `titleOfCourtesy` VARCHAR(45) NULL,
+  `birthDate` DATE NULL,
+  `hireDate` DATE NULL,
+  `address` VARCHAR(100) NULL,
+  `city` VARCHAR(45) NULL,
+  `region` VARCHAR(45) NULL,
+  `postalCode` INT NULL,
+  `country` VARCHAR(45) NULL,
+  `homePhone` DOUBLE NULL,
+  `extension` INT NULL,
+  `photo` VARCHAR(45) NULL,
+  `notes` VARCHAR(200) NULL,
+  `reportsTo` VARCHAR(45) NULL,
+  PRIMARY KEY (`employeeID`),
+  INDEX `Index1` (`postalCode` ASC) VISIBLE);
+CREATE TABLE `productos`.`products` (
+  `productID` INT NOT NULL,
+  `productName` VARCHAR(45) NULL,
+  `supplierID` INT NULL,
+  `categoryID` INT NULL,
+  `quantityPerUnit` INT NULL,
+  `unitPrice` DOUBLE NULL,
+  `unitsInStock` INT NULL,
+  `unitsOnOrder` INT NULL,
+  `reorderLevel` VARCHAR(45) NULL,
+  `discontinued` TINYINT NULL,
+  PRIMARY KEY (`productID`));
+ALTER TABLE `productos`.`products` 
+ADD CONSTRAINT `prodCategoryFK`
+  FOREIGN KEY (`categoryID`)
+  REFERENCES `productos`.`categories` (`categoryID`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `prosSupFK`
+  FOREIGN KEY (`supplierID`)
+  REFERENCES `productos`.`suppliers` (`supplierID`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+CREATE TABLE `productos`.`orders` (
+  `orderID` INT NOT NULL,
+  `customerID` INT NOT NULL,
+  `employeeID` INT NOT NULL,
+  `orderDate` DATE NULL,
+  `requiredDate` DATE NULL,
+  `shippedDate` DATE NULL,
+  `shipVia` INT NOT NULL,
+  `freight` VARCHAR(45) NULL,
+  `shipName` VARCHAR(45) NULL,
+  `shipAddress` VARCHAR(45) NULL,
+  `shipCity` VARCHAR(45) NULL,
+  `shipRegion` VARCHAR(45) NULL,
+  `shipPostalCode` INT NULL,
+  `shipCountry` VARCHAR(45) NULL,
+  PRIMARY KEY (`orderID`),
+  INDEX `orderCustomerFK_idx` (`customerID` ASC) VISIBLE,
+  INDEX `orderEmployessFK_idx` (`employeeID` ASC) VISIBLE,
+  INDEX `orderShipFK_idx` (`shipVia` ASC) VISIBLE,
+  CONSTRAINT `orderCustomerFK`
+    FOREIGN KEY (`customerID`)
+    REFERENCES `productos`.`customers` (`customerID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `orderEmployessFK`
+    FOREIGN KEY (`employeeID`)
+    REFERENCES `productos`.`employees` (`employeeID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `orderShipFK`
+    FOREIGN KEY (`shipVia`)
+    REFERENCES `productos`.`shippers` (`shipperID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+CREATE TABLE `productos`.`orderdetails` (
+  `orderID` INT NOT NULL,
+  `productID` INT NOT NULL,
+  `unitPrice` DOUBLE NULL,
+  `quantity` INT NULL,
+  `discount` INT NULL,
+  PRIMARY KEY (`orderID`, `productID`),
+  INDEX `productdetailFK_idx` (`productID` ASC) VISIBLE,
+  CONSTRAINT `orderdetailFK`
+    FOREIGN KEY (`orderID`)
+    REFERENCES `productos`.`orders` (`orderID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `productdetailFK`
+    FOREIGN KEY (`productID`)
+    REFERENCES `productos`.`products` (`productID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
