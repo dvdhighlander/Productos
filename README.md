@@ -43,5 +43,5 @@ Estan expuestos los siguientes Endpoints (estas url estan escritas en este READM
         "supplierID": 6,
         "cattegoryID": 1
     }
-7. http://localhost:8080/Products?page=1&pageSize=10 : Método GET - Obtiene la lista de los productos, se utiliza un paginador, por lo que necesita como parametros el número página que se quiere traer y el tamaño de la página ( cantidad de productos mostrados por página).
+7. http://localhost:8080/Products?page=1&pageSize=10 : Método GET - Obtiene la lista de los productos, se utiliza un paginador, por lo que necesita como parametros el número página que se quiere traer y el tamaño de la página ( cantidad de productos mostrados por página). La página inicial es la número 0.
 8. http://localhost:8080/Products/ID : Método GET - Obtiene el producto por ID, se cambia la palabra ID de la url por el número Id del producto
